@@ -40,27 +40,22 @@ export default {
 }
 
 .el-header {
-  height: 7%;
-  padding: 0;
-  background-color: cornflowerblue;
+  padding:0;
 }
 
 .el-aside {
   width: 20%;
   float: left;
   height: 100%;
-  background-color: aquamarine;
 }
 
 .el-main {
   width: 80%;
   height: 100%;
-  background-color: chocolate;
 }
 
 .el-footer {
   width: 100%;
   height: 13%;
-  background-color: darkorange;
 }
 </style>
