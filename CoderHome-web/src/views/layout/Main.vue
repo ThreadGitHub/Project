@@ -4,11 +4,18 @@
 </template>
 
 <script>
+import request from "@/utils/request";
+import {baidu} from "@/api/test";
+
 export default {
   name: "Main",
   methods: {
     openUrl() {
-      window.open("https://www.baidu.com");
+      baidu().then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }
