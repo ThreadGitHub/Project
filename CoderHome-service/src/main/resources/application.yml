@@ -1,0 +1,15 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: CoderHome-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/coder
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
