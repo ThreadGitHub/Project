@@ -17,3 +17,9 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
+
+jwt:
+  #token加盐
+  key: JGKFDSAJGLDJSALKGJIOWGJEOIWJJGIODSJAGIODJS
+  #token过期时间
+  timeout: 30
