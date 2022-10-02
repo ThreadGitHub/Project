@@ -6,10 +6,14 @@ spring:
     name: CoderHome-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/coder
+    url: jdbc:mysql://82.157.172.249:3306/coder
     username: root
-    password: root
+    password: System.MySQL
     type: com.zaxxer.hikari.HikariDataSource
+  #kenife4j 配置
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
