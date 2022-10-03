@@ -1,8 +1,9 @@
-package com.coder.service.controller.test;
+package com.coder.service.controller;
 
 import com.coder.service.domain.entity.User;
 import com.coder.service.service.UserSerivce;
 import com.coder.service.utils.JwtUtils;
+import com.coder.service.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,13 @@ public class TestController {
 
     @ApiOperation("查用户")
     @GetMapping("/users")
-    public List<User> listUser() {
-        return userSerivce.list();
+    public ResponseUtils<List<User>> listUser() {
+        return ResponseUtils.success(userSerivce.list());
+    }
+
+    @ApiOperation("error")
+    @GetMapping("/error")
+    public ResponseUtils<String> error() {
+        return ResponseUtils.error("你错了兄弟");
     }
 }

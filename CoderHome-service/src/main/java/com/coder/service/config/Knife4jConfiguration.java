@@ -29,10 +29,10 @@ public class Knife4jConfiguration {
         Docket docket=new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(getApiInfo())
                 //分组名称
-                .groupName("用户服务")
+                .groupName("项目接口")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.coder.service.controller.test"))
+                .apis(RequestHandlerSelectors.basePackage("com.coder.service.controller"))
                 .paths(PathSelectors.any())
                 .build();
         return docket;

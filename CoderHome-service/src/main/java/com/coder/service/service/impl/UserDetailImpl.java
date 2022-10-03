@@ -1,6 +1,6 @@
 package com.coder.service.service.impl;
 
-import com.coder.service.domain.entity.UserAuth;
+import com.coder.service.domain.entity.LoginUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +11,7 @@ import java.util.Collection;
 @Getter
 @Setter
 public class UserDetailImpl implements UserDetails {
-    private UserAuth userAuth = new UserAuth();
+    private LoginUser loginUser = new LoginUser();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -20,12 +20,12 @@ public class UserDetailImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return userAuth.getPassword();
+        return loginUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userAuth.getUserName();
+        return loginUser.getUserName();
     }
 
     /**
@@ -34,7 +34,7 @@ public class UserDetailImpl implements UserDetails {
      */
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     /**
@@ -43,7 +43,7 @@ public class UserDetailImpl implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     /**

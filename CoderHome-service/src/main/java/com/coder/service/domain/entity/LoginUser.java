@@ -1,13 +1,14 @@
 package com.coder.service.domain.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class UserAuth {
+public class LoginUser {
     /**
      * 用户名
      */
