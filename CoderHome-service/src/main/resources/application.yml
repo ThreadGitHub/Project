@@ -14,10 +14,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
-  security:
-    user:
-      name: user
-      password: user
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
 

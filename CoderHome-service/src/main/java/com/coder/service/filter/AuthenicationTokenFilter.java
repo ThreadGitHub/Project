@@ -16,7 +16,6 @@ import java.io.IOException;
 public class AuthenicationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(httpServletRequest.getContextPath());
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

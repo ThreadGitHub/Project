@@ -12,12 +12,13 @@ import javax.annotation.Resource;
 import java.util.Objects;
 
 @Service
-public class UserDetailServiceImpl implements UserDetailsService {
+public class SecurityUserDetailServiceImpl implements UserDetailsService {
     @Resource
     private UserSerivce userSerivce;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        //校验用户名是否存在
         User user = userSerivce.getUserByName(userName);
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("用户名不存在");
