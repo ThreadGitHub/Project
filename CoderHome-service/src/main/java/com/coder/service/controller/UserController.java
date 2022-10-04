@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "认证接口")
@@ -17,7 +18,13 @@ public class UserController {
 
     @ApiOperation("登录接口")
     @PostMapping("/login")
-    public ResponseUtils login(UserDTO userDTO) {
+    public ResponseUtils login(@RequestBody UserDTO userDTO) {
         return userSerivce.login(userDTO);
+    }
+
+    @ApiOperation("注册接口")
+    @PostMapping("/register")
+    public ResponseUtils register(@RequestBody UserDTO userDTO) {
+        return userSerivce.register(userDTO);
     }
 }

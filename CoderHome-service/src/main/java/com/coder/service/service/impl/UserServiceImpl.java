@@ -11,9 +11,11 @@ import com.coder.service.service.UserSerivce;
 import com.coder.service.service.UserTokenService;
 import com.coder.service.utils.JwtUtils;
 import com.coder.service.utils.ResponseUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +29,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private JwtUtils jwtUtils;
     @Resource
     private UserTokenService userTokenService;
+    @Resource
+    private UserSerivce userSerivce;
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public boolean hasUserExsit(String userName) {
@@ -61,5 +67,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else {
             return ResponseUtils.error("用户登录失败,保存token失败");
         }
+    }
+
+    @Override
+    public ResponseUtils register(UserDTO user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User userEntity = new User();
+        BeanUtils.copyProperties(user, userEntity);
+        userSerivce.save(userEntity);
+        return ResponseUtils.ok();
     }
 }

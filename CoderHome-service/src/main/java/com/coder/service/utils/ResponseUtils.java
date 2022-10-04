@@ -18,6 +18,10 @@ public class ResponseUtils<T> {
     @ApiModelProperty("数据")
     private T data;
 
+    public static ResponseUtils ok() {
+        return ResponseUtils.success("ok");
+    }
+
     public static ResponseUtils success(Object data) {
         return new ResponseUtils(HttpStatus.OK.value(), data);
     }
