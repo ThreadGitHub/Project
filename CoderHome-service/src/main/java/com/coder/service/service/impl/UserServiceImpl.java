@@ -1,11 +1,15 @@
 package com.coder.service.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coder.service.domain.dto.UserDTO;
 import com.coder.service.domain.entity.User;
+import com.coder.service.domain.entity.UserToken;
 import com.coder.service.mapper.UserMapper;
 import com.coder.service.service.UserSerivce;
+import com.coder.service.service.UserTokenService;
+import com.coder.service.utils.JwtUtils;
 import com.coder.service.utils.ResponseUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +23,10 @@ import java.util.Objects;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserSerivce {
     @Resource
     private AuthenticationManager authenticationManager;
+    @Resource
+    private JwtUtils jwtUtils;
+    @Resource
+    private UserTokenService userTokenService;
 
     @Override
     public boolean hasUserExsit(String userName) {
@@ -39,11 +47,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
         try {
             Authentication authenticate = authenticationManager.authenticate(userToken);
-            System.out.println(authenticate);
         }catch (Exception e) {
             String message = e.getMessage();
             return ResponseUtils.error(message);
         }
-       return ResponseUtils.success("ok");
+        String jwt = jwtUtils.createJWT(user.getUserName(), 30);
+        UserToken token = new UserToken();
+        token.setToken(jwt);
+        token.setUserName(user.getUserName());
+        boolean save = userTokenService.saveOrUpdate(token, new LambdaUpdateWrapper<UserToken>().eq(UserToken::getUserName, user.getUserName()));
+        if (save){
+            return ResponseUtils.success("ok");
+        } else {
+            return ResponseUtils.error("用户登录失败,保存token失败");
+        }
     }
 }
