@@ -57,7 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         token.setUserName(user.getUserName());
         boolean save = userTokenService.saveOrUpdate(token, new LambdaUpdateWrapper<UserToken>().eq(UserToken::getUserName, user.getUserName()));
         if (save){
-            return ResponseUtils.success("ok");
+            return ResponseUtils.success(token);
         } else {
             return ResponseUtils.error("用户登录失败,保存token失败");
         }
