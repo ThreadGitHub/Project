@@ -3,6 +3,8 @@ package com.coder.service.service.impl;
 import com.coder.service.domain.entity.LoginUser;
 import com.coder.service.domain.entity.User;
 import com.coder.service.service.UserSerivce;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +17,8 @@ import java.util.Objects;
 public class SecurityUserDetailServiceImpl implements UserDetailsService {
     @Resource
     private UserSerivce userSerivce;
+    @Resource
+    private CacheManager cacheManager;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -25,6 +29,9 @@ public class SecurityUserDetailServiceImpl implements UserDetailsService {
         }
         UserDetailImpl userDetail = new UserDetailImpl();
         userDetail.setLoginUser(LoginUser.builder().userName(user.getUserName()).password(user.getPassword()).build());
+        //缓存用户
+        Cache cache = cacheManager.getCache("loginCache");
+        cache.put("login:user:" + userName, userDetail);
         return userDetail;
     }
 }

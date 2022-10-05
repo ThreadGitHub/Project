@@ -4,10 +4,9 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.coder.service.domain.entity.UserToken;
-import com.coder.service.service.UserSerivce;
 import com.coder.service.service.UserTokenService;
+import com.coder.service.service.impl.UserDetailImpl;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -29,7 +28,7 @@ public class AuthenicationTokenFilter extends OncePerRequestFilter {
     @Resource
     private UserTokenService userTokenService;
     @Resource
-    private UserSerivce userSerivce;
+    private CacheManager cacheManager;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -42,14 +41,10 @@ public class AuthenicationTokenFilter extends OncePerRequestFilter {
                 JWT jwt = JWTUtil.parseToken(token);
                 JSONObject payloads = jwt.getPayloads();
                 String userName = payloads.getStr(JWTPayload.SUBJECT);
-                LambdaQueryWrapper<UserToken> queryWrapper = new LambdaQueryWrapper<>();
-                queryWrapper.eq(UserToken::getUserName, userName);
-                UserToken userToken = userTokenService.getOne(queryWrapper);
-                if (!Objects.isNull(userToken)) {
-                    if (userToken.getToken().equals(token)) {
-                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userName, null, null);
-                        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                    }
+                UserDetailImpl userDetail = (UserDetailImpl) cacheManager.getCache("loginCache").get("login:user:" + userName).get();
+                if (!Objects.isNull(userDetail)) {
+                    UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(userDetail.getUsername(), userDetail.getPassword(), userDetail.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(userToken);
                 }
             } catch (Exception e) {
             } finally {
