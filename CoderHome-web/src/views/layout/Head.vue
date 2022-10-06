@@ -18,7 +18,7 @@
             <el-avatar src="https://avatars.githubusercontent.com/u/32630294?s=400&u=288cd0ed64989013bd40446a5ceb387e275021c5&v=4"/>
           </el-col>
           <el-col :span="7" style="padding-top: 10px;">
-            <el-button color="#626aef">登录</el-button>
+            <el-button color="#626aef" @click="loginFunc()">登录</el-button>
           </el-col>
           <el-col :span="7" style="padding-top: 10px;">
             <el-button>注册</el-button>
@@ -30,8 +30,15 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
-  name: "Head"
+  name: "Head",
+  methods: {
+    loginFunc(){
+      router.push("/login")
+    }
+  }
 }
 </script>
 

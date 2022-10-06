@@ -9,7 +9,11 @@ module.exports = defineConfig({
       '/api' : {
         target: 'http://localhost:9999',
         changeOrigin: true,
-        ws: false
+        ws: false,
+        //剔除掉请求到后台时的 /api 前缀
+        pathRewrite: {
+          ["^/api"]: ""
+        }
       }
     }
   }

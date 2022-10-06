@@ -5,7 +5,7 @@
 
 <script>
 import request from "@/utils/request";
-import {baidu} from "@/api/test";
+import {baidu} from "@/api/user";
 
 export default {
   name: "Main",

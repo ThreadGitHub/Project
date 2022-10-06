@@ -1,16 +1,16 @@
 <template>
   <div class="login">
-    <el-form ref="loginForm" :model="loginForm">
-      <h3>CoderHome用户登录</h3>
+    <el-form ref="loginForm">
+      <h2>CoderHome 用户登录</h2>
       <el-item prop="userName">
-        <el-input v-model="loginForm.userName" type="text"
+        <el-input v-model="userName" type="text"
                   auto-complete="off"
                   placeholder="请输入账号">
         </el-input>
 
       </el-item>
       <el-item prop="password">
-        <el-input v-model="loginForm.password" type="password"
+        <el-input v-model="password" type="password"
                   auto-complete="off"
                   placeholder="请输入密码">
         </el-input>
@@ -21,6 +21,7 @@
             size="medium"
             type="primary"
             style="width:100%;"
+            @click="loginFunc()"
             @click.native.prevent="handleLogin"
         >
           <span v-if="!loading">登 录</span>
@@ -31,22 +32,43 @@
         </div>
       </el-form-item>
     </el-form>
-
-
   </div>
 </template>s
 
 <script>
+import {login} from "@/api/user";
+import {ElMessage} from "element-plus";
+
 export default {
   name: "Login",
   data() {
     return {
-      loginForm: {
-        userName: "",
-        password: "",
-        rememberMe: false
-      },
+      userName: "",
+      password: "",
       loading: false
+    }
+  },
+  methods: {
+    loginFunc(){
+      login({
+        userName: this.userName,
+        password: this.password
+      }).then(res => {
+        let data = res.data
+        if (data.code == '200') {
+          ElMessage({
+            showClose: true,
+            message: "登录成功, token: " + data.data.token,
+            type: 'success'
+          })
+        }else{
+          ElMessage({
+            showClose: true,
+            message: data.data,
+            type: 'error'
+          })
+        }
+      })
     }
   }
 }
@@ -63,5 +85,8 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.el-input {
+  margin-bottom: 20px;
 }
 </style>
