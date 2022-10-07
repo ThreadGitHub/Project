@@ -31,7 +31,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //关闭 csrf
         http.csrf().disable();
-        //关闭从session中获取
+        //Spring Security永远不会创建HttpSession，它不会使用HttpSession来获取SecurityContext
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //授权
         http.authorizeRequests()
@@ -45,6 +45,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
+    /**
+     * SpringSecurity授权管理器 用于做登录校验
+     * @return
+     * @throws Exception
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

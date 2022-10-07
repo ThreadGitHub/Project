@@ -20,6 +20,7 @@ public class SecurityLoginUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        //可以临时存一下权限集合不用每次都 stream转换
         if (Objects.isNull(simpleGrantedAuthorityList)) {
             simpleGrantedAuthorityList = authorites.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         }

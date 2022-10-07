@@ -51,6 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public ResponseUtils login(UserDTO user) {
+        //用户登录认证
         UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
         try {
             Authentication authenticate = authenticationManager.authenticate(userToken);
@@ -58,6 +59,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             String message = e.getMessage();
             return ResponseUtils.error(message);
         }
+
+        //生成token信息
         String jwt = jwtUtils.createJWT(user.getUserName(), 30);
         UserToken token = new UserToken();
         token.setToken(jwt);
