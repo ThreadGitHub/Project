@@ -1,31 +1,39 @@
-package com.coder.service.service.impl;
+package com.coder.service.domain.entity;
 
-import com.coder.service.domain.entity.LoginUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class UserDetailImpl implements UserDetails {
-    private LoginUser loginUser = new LoginUser();
+public class SecurityLoginUser implements UserDetails {
+    private User user;
+    private List<String> authorites;
+    private List<SimpleGrantedAuthority> simpleGrantedAuthorityList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        if (Objects.isNull(simpleGrantedAuthorityList)) {
+            simpleGrantedAuthorityList = authorites.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        }
+        return simpleGrantedAuthorityList;
     }
 
     @Override
     public String getPassword() {
-        return loginUser.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return loginUser.getUserName();
+        return user.getUserName();
     }
 
     /**

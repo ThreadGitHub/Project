@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
 @TableName("user")
-public class User {
+public class User implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 

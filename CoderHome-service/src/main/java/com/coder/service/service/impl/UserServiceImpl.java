@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -76,5 +77,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         BeanUtils.copyProperties(user, userEntity);
         userSerivce.save(userEntity);
         return ResponseUtils.ok();
+    }
+
+    @Override
+    public List<String> getAuthorityByUserId(Long userId) {
+        List<String> authorityList = baseMapper.getAuthorityByUserId(userId);
+        return authorityList;
     }
 }
