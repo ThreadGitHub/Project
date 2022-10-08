@@ -1,27 +1,26 @@
 <template>
   <div class="head-container">
     <el-row class="header-row">
-      <el-col class="head-title-col" :span="4">
+      <el-col class="head-title-col" :span="14">
         <span class="head-title">CoderHome</span>
       </el-col>
-      <el-col :span="12">
-
-      </el-col>
-
       <el-col :span="4" style="padding-top: 10px;">
         <el-input placeholder="查询" suffix-icon="Search"/>
       </el-col>
 
-      <el-col :span="4">
+      <el-col :span="6">
         <el-row>
-          <el-col class="avatar-col" :span="10" style="text-align: center;padding-top: 10px;">
+          <el-col class="avatar-col" :span="6" style="text-align: center;padding-top: 10px;">
             <el-avatar src="https://avatars.githubusercontent.com/u/32630294?s=400&u=288cd0ed64989013bd40446a5ceb387e275021c5&v=4"/>
           </el-col>
-          <el-col :span="7" style="padding-top: 10px;">
+          <el-col :span="5" style="padding-top: 10px;">
             <el-button color="#626aef" @click="loginFunc()">登录</el-button>
           </el-col>
-          <el-col :span="7" style="padding-top: 10px;">
+          <el-col :span="5" style="padding-top: 10px;">
             <el-button>注册</el-button>
+          </el-col>
+          <el-col :span="5" style="padding-top: 10px;">
+            <el-button @click="openMD()" type="success">写文章</el-button>
           </el-col>
         </el-row>
       </el-col>
@@ -37,6 +36,9 @@ export default {
   methods: {
     loginFunc(){
       router.push("/login")
+    },
+    openMD() {
+      router.push("/md")
     }
   }
 }

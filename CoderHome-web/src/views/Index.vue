@@ -3,7 +3,7 @@
     <el-header>
       <Head></Head>
     </el-header>
-    <el-container style="height: 80%;">
+    <el-container style="height: 80vh;">
       <el-aside>
         <Left></Left>
       </el-aside>
@@ -36,26 +36,16 @@ export default {
 
 <style scoped>
 .el-container {
-  height: 100%;
+  height: 100vh;
 }
 
 .el-header {
   padding:0;
-}
-
-.el-aside {
-  width: 20%;
-  float: left;
-  height: 100%;
-}
-
-.el-main {
-  width: 80%;
-  height: 100%;
+  height: 8vh;
 }
 
 .el-footer {
   width: 100%;
-  height: 13%;
+  height: 12vh;
 }
 </style>
