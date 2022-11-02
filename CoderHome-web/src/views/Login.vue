@@ -61,6 +61,8 @@ export default {
             message: "登录成功, token: " + data.data.token,
             type: 'success'
           })
+          //存入localStorage
+          localStorage.setItem("user", data.data.token)
         }else{
           ElMessage({
             showClose: true,

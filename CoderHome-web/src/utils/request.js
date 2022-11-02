@@ -6,4 +6,14 @@ const service = axios.create({
     timeout: 10000
 });
 
+axios.interceptors.request.use(function (config){
+    let token = '';
+    let user = localStorage.getItem("user");
+    if (user) {
+        token = user;
+    }
+    config.headers['Authorization'] = `Bearer ${token}`;
+    return config;
+})
+
 export default axios;
