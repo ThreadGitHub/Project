@@ -36,6 +36,10 @@ public class AuthenicationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
             try {
+                //去掉前置头
+                if (token.startsWith("Bearer")) {
+                    token = token.replace("Bearer", "");
+                }
                 JWT jwt = JWTUtil.parseToken(token);
                 JSONObject payloads = jwt.getPayloads();
                 String userName = payloads.getStr(JWTPayload.SUBJECT);
