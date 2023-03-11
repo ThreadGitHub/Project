@@ -15,7 +15,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       #空闲连接最大超时时间 2分钟
-#      max-lifetime: 120000
+      max-lifetime: 120000
 
   #kenife4j 配置
   mvc:
