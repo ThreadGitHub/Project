@@ -7,12 +7,10 @@ const service = axios.create({
 });
 
 axios.interceptors.request.use(function (config){
-    let token = '';
     let user = localStorage.getItem("user");
     if (user) {
-        token = user;
+        config.headers['Authorization'] = `Bearer ${user}`;
     }
-    config.headers['Authorization'] = `Bearer ${token}`;
     return config;
 })
 

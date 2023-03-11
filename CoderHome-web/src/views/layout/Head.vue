@@ -9,14 +9,14 @@
       </el-col>
 
       <el-col :span="6">
-        <el-row>
+        <el-row style="height: 100%;width: 100%;">
           <el-col class="avatar-col" :span="6" style="text-align: center;padding-top: 10px;">
             <el-avatar src="https://avatars.githubusercontent.com/u/32630294?s=400&u=288cd0ed64989013bd40446a5ceb387e275021c5&v=4"/>
           </el-col>
           <el-col :span="5" style="padding-top: 10px;">
             <el-button color="#626aef" @click="loginFunc()">登录</el-button>
           </el-col>
-          <el-col :span="5" style="padding-top: 10px;">
+          <el-col :span="5" style="padding-top: 10px;height: 100%;width: 100%">
             <el-button>注册</el-button>
           </el-col>
           <el-col :span="5" style="padding-top: 10px;">

@@ -1,19 +1,16 @@
 <template>
-  <el-container>
-    <el-header>
+  <el-container class="page-content">
+    <el-header style="height: 8vh">
       <Head></Head>
     </el-header>
-    <el-container style="height: 80vh;">
+    <el-container style="height: 92vh;">
       <el-aside>
-        <Left></Left>
+        <Left id="left-contains" @callBack="changePageType"></Left>
       </el-aside>
-      <el-main>
-        <Main></Main>
+      <el-main  v-infinite-scroll="loadPages">
+        <Main v-model:page-type="pageType" ref="main"></Main>
       </el-main>
     </el-container>
-    <el-footer>
-      <Footer></Footer>
-    </el-footer>
   </el-container>
 </template>
 
@@ -28,24 +25,31 @@ export default {
   components: {Head, Left, Main, Footer},
   data() {
     return {
-      text: 'test'
+      text: 'test',
+      pageType:''
     };
+  },
+  methods: {
+    /**
+     * 左侧菜单列表点击的时候加载右侧文章内容事件
+     * @param type
+     */
+    changePageType(type) {
+      this.pageType = type;
+    },
+    /**
+     * 右侧动态加载文章内容
+     */
+    loadPages() {
+      console.log("loadPages init()")
+      this.$refs.main.load();
+    }
   }
 }
 </script>
 
 <style scoped>
-.el-container {
-  height: 100vh;
-}
-
-.el-header {
-  padding:0;
-  height: 8vh;
-}
-
-.el-footer {
-  width: 100%;
-  height: 12vh;
+.page-content {
+  background-color: #f3f6f6;
 }
 </style>

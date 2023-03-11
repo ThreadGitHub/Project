@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     goBack() {
+      console.log(this.text)
       router.push("/");
     }
   }
