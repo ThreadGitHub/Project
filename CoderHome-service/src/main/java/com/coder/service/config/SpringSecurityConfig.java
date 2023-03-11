@@ -38,7 +38,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 //放行 Kenife4j文档不用授权登录访问
                 .antMatchers("/doc.html","/webjars/**","/img.icons/**", "/swagger-resources/**", "/v2/api-docs").permitAll()
                 //放行登录请求
-                .antMatchers("/login", "/register").permitAll()
+                .antMatchers("/login", "/register", "/*/*").permitAll()
                 //其他请求需要认证通过才能访问
                 .anyRequest().authenticated();
         //增加自定义获取token信息的过滤器到 security 过滤器之前
