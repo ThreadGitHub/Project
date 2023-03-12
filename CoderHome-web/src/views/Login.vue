@@ -38,6 +38,7 @@
 <script>
 import {login} from "@/api/user";
 import {ElMessage} from "element-plus";
+import router from "@/router";
 
 export default {
   name: "Login",
@@ -63,6 +64,7 @@ export default {
           })
           //存入localStorage
           localStorage.setItem("user", data.data.token)
+          router.push("/")
         }else{
           ElMessage({
             showClose: true,

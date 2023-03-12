@@ -13,30 +13,16 @@
           <el-icon><Compass /></el-icon>
           <span type="1">{{item.category}}</span>
         </el-menu-item>
-
-<!--        <el-menu-item index="后端">-->
-<!--          <el-icon><CoffeeCup /></el-icon>-->
-<!--          <span type="2">后端</span>-->
-<!--        </el-menu-item>-->
-
-<!--        <el-menu-item index="前端">-->
-<!--          <el-icon><Monitor /></el-icon>-->
-<!--          <span type="3">前端</span>-->
-<!--        </el-menu-item>-->
-<!--        <el-menu-item index="开发工具">-->
-<!--          <el-icon><Setting /></el-icon>-->
-<!--          <span type="4">开发工具</span>-->
-<!--        </el-menu-item>-->
       </el-menu>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import {listArticleCategory} from "@/api/page";
+import {listArticleCategory} from "@/api/article";
 
 export default {
-  name: "Left",
+  name: "LeftMenu",
   mounted() {
     listArticleCategory().then(res=> {
       if (res.data.length > 0) {
@@ -54,7 +40,13 @@ export default {
   },
   methods: {
     handleOpen(index, indexPath, item, routeResult) {
-      this.$emit("callBack", index);
+      console.log("触发左侧分类点击事件")
+      for (const itemKey in this.articleCategory) {
+        if (this.articleCategory[itemKey].id == index) {
+          this.$emit("callBack", index, this.articleCategory[itemKey].category);
+          break;
+        }
+      }
     }
   }
 }

@@ -17,7 +17,7 @@
             <el-button color="#626aef" @click="loginFunc()">登录</el-button>
           </el-col>
           <el-col :span="5" style="padding-top: 10px;height: 100%;width: 100%">
-            <el-button>注册</el-button>
+            <el-button @click="registerFunc">注册</el-button>
           </el-col>
           <el-col :span="5" style="padding-top: 10px;">
             <el-button @click="openMD()" type="success">写文章</el-button>
@@ -39,6 +39,9 @@ export default {
     },
     openMD() {
       router.push("/md")
+    },
+    registerFunc() {
+      router.push("/register")
     }
   }
 }

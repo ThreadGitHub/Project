@@ -1,81 +1,76 @@
 <template>
-  <h1>{{pageType}}</h1>
-<!--  <el-button @click="openUrl()">打开百度</el-button>-->
-<!--  <el-button @click="openAdmin()">测试管理员登录授权</el-button>-->
-<!--  <el-button @click="openUser()">测试普通用户登录授权</el-button>-->
   <el-row>
     <el-col :span="10">
       <ul class="infinite-list">
-        <li v-for="i in count" :key="i" class="infinite-list-item">文章：{{ i }}</li>
+        <li v-for="item in articles" class="infinite-list-item">文章：{{item.articleName}}</li>
       </ul>
     </el-col>
   </el-row>
-
 </template>
 
-
 <script>
-import request from "@/utils/request";
-import {baidu} from "@/api/user";
 import {ElMessage} from "element-plus";
+import {listArticle} from "@/api/article";
 
 export default {
   name: "Main",
   data() {
     return {
-      count : 0
+      count : 0,
+      addNum: 2,
+      articleCategory: '',
+      articles: []
     }
   },
   props:{
-    pageType: String
+    pageType: String,
+    pageName: String
   },
   watch:{
     pageType(newVal, oldVal) {
-      console.log("检查到新值：" + newVal)
+      this.count = 0;
+      this.articles = [];
+      if (newVal != '') {
+        //设置选中的文章类型
+        this.articleCategory = newVal;
+        //加载文章列表
+        this.load();
+      }
     }
   },
   methods: {
-    load(arg) {
-      if (this.count == 0) {
-        this.count = 10;
-        return;
-      }
-      this.count+=2;
-      console.log(arg)
+    /**
+     * 加载文章列表
+     */
+    load() {
+      console.log(this.count + "\t" + this.addNum + "\t" + this.articleCategory)
+      this.listArticles(this.articleCategory, this.count, this.addNum)
     },
-    openUrl() {
-      baidu().then(res => {
-        console.log(res)
+    /**
+     * 加载文章列表数据
+     * @param articleCategory
+     * @param count
+     * @param addNum
+     */
+    listArticles(articleCategory, count, addNum) {
+      listArticle(articleCategory, count, addNum).then(res => {
+        if (res.data.code == '200') {
+          let articleArray = res.data.data;
+          if (articleArray.length > 0) {
+            console.log("..........")
+            this.articles.push(...res.data.data);
+            console.log(this.articles)
+            //之后每次递增5条
+            this.count += addNum;
+          }
+        }
       }).catch(error => {
-        console.log(error)
+        ElMessage({
+          showClose: true,
+          message: error,
+          type: 'error'
+        })
       })
-    },
-    showMsg(message) {
-      ElMessage({
-        showClose: true,
-        message: message,
-        type: 'success'
-      })
-    },
-    openAdmin () {
-      request({
-        url: '/api/test/admin',
-        method: 'get'
-      }).then(res => {
-        this.showMsg(res.data)
-      }).catch(err => {
-        this.showMsg('无权请登录 ' + err)
-      });
-    },
-    openUser() {
-      request({
-        url: '/api/test/user',
-        method: 'get'
-      }).then(res => {
-        this.showMsg(res.data)
-      }).catch(err => {
-        this.showMsg('无权请登录 ' + err)
-      });
     }
   }
 }
@@ -83,7 +78,6 @@ export default {
 
 <style scoped>
   .infinite-list {
-    /*height: 300px;*/
     padding: 0;
     margin: 0;
     list-style: none;
@@ -92,7 +86,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 70px;
+    height: 120px;
     background: var(--el-color-primary-light-9);
     margin: 10px;
     color: var(--el-color-primary);

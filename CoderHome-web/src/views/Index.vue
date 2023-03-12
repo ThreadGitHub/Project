@@ -7,8 +7,8 @@
       <el-aside>
         <Left id="left-contains" @callBack="changePageType"></Left>
       </el-aside>
-      <el-main  v-infinite-scroll="loadPages">
-        <Main v-model:page-type="pageType" ref="main"></Main>
+      <el-main v-infinite-scroll="loadPages" style="overflow: auto">
+        <Main v-model:page-type="pageType" v-model:page-name="pageName" ref="main"></Main>
       </el-main>
     </el-container>
   </el-container>
@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       text: 'test',
-      pageType:''
+      pageType: '',
+      pageName: ''
     };
   },
   methods: {
@@ -34,14 +35,15 @@ export default {
      * 左侧菜单列表点击的时候加载右侧文章内容事件
      * @param type
      */
-    changePageType(type) {
+    changePageType(type, name) {
       this.pageType = type;
+      this.pageName = name;
     },
     /**
      * 右侧动态加载文章内容
      */
     loadPages() {
-      console.log("loadPages init()")
+      console.log("触发动态加载数据事件")
       this.$refs.main.load();
     }
   }
@@ -51,5 +53,9 @@ export default {
 <style scoped>
 .page-content {
   background-color: #f3f6f6;
+}
+/*去掉Head的左右padding*/
+.el-header {
+  padding: 0;
 }
 </style>

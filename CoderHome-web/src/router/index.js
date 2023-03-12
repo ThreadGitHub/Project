@@ -22,8 +22,13 @@ const routes = [
     },
     {
         path: '/md',
-        name: 'MarkDownTest',
-        component: () => import('../views/MarkDownTest')
+        name: 'MarkDown',
+        component: () => import('../views/MarkDown')
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: ()=> import('../views/Register')
     }
 ]
 

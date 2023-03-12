@@ -4,7 +4,7 @@ module.exports = defineConfig({
   // 设置vue服务器代理后台服务地址
   devServer: {
     host: "localhost",
-    port: "8080",
+    port: "80",
     //允许vue项目 用ip访问
     host: '0.0.0.0',
     proxy: {
