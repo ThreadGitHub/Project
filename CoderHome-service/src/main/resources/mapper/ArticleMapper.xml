@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.coder.service.mapper.ArticleMapper">
+    <!--查询文章列表-->
+    <select id="listArticle" resultType="com.coder.service.domain.entity.Article">
+        select id, article_name, article_content, article_category, create_time, update_time, create_by
+        from articles
+        where article_category = #{param1}
+        order by create_time desc
+        limit #{param2}, #{param3}
+    </select>
+</mapper>

@@ -8,10 +8,12 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "认证接口")
 @RestController
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserSerivce userSerivce;
@@ -25,6 +27,7 @@ public class UserController {
     @ApiOperation("注册接口")
     @PostMapping("/register")
     public ResponseUtils register(@RequestBody UserDTO userDTO) {
-        return userSerivce.register(userDTO);
+        userSerivce.register(userDTO);
+        return ResponseUtils.ok();
     }
 }

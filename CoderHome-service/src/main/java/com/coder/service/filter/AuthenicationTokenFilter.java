@@ -6,6 +6,7 @@ import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
 import com.coder.service.domain.entity.SecurityLoginUser;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,8 +44,9 @@ public class AuthenicationTokenFilter extends OncePerRequestFilter {
                 JWT jwt = JWTUtil.parseToken(token);
                 JSONObject payloads = jwt.getPayloads();
                 String userName = payloads.getStr(JWTPayload.SUBJECT);
-                SecurityLoginUser userDetail = (SecurityLoginUser) cacheManager.getCache("loginCache").get("login:user:" + userName).get();
-                if (!Objects.isNull(userDetail)) {
+                Cache.ValueWrapper loginCache = cacheManager.getCache("loginCache").get("login:user:" + userName);
+                if (!Objects.isNull(loginCache)) {
+                    SecurityLoginUser userDetail = (SecurityLoginUser) loginCache.get();
                     UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(userDetail.getUsername(), userDetail.getPassword(), userDetail.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(userToken);
                 }

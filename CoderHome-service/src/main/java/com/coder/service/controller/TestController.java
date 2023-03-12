@@ -3,6 +3,8 @@ package com.coder.service.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 public class TestController {
+    @PreAuthorize("hasAuthority('system:homepage')")
     @GetMapping("/hello")
     public String hello() {
-        return "hello baby !";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println();
+        return "hello "+ authentication.getName() +" ! ";
     }
 
     @PreAuthorize("hasAuthority('system:manager')")
